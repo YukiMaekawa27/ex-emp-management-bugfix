@@ -69,8 +69,7 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@RequestMapping("/insert")
-	public String insert(@Validated InsertAdministratorForm form, BindingResult result, Model model,
-			String mailAddress) {
+	public String insert(@Validated InsertAdministratorForm form, BindingResult result, Model model, String password2) {
 		if (result.hasErrors()) {
 			return toInsert(model);
 		}
@@ -79,9 +78,13 @@ public class AdministratorController {
 		BeanUtils.copyProperties(form, administrator);
 		Administrator existOrNot = administratorService.findByMailAddress(administrator.getMailAddress());
 		if (existOrNot != null) {
-//			result.addError(new ObjectError("sameemail", "すでに使われているメールアドレスです。"));
-//			return toInsert(model);
-			model.addAttribute("sameemail", "すでに使われているメールアドレスです。");
+			result.rejectValue("sameemail", null,  "すでに使われているメールアドレスです。");
+			//model.addAttribute("sameemail", "すでに使われているメールアドレスです。");
+			return toInsert(model);
+		}
+		//確認用パスワードとパスワードが一致するかチェック
+		if (!administrator.getPassword().equals(password2)) {
+			model.addAttribute("passwordNotMatch", "パスワードが一致しません。");
 			return toInsert(model);
 		}
 		return "redirect:/";
