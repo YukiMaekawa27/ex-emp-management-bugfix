@@ -19,8 +19,8 @@ public class InsertAdministratorForm {
 	@Email(message="メールアドレスの形式ではありません")
 	private String mailAddress;
 	/** パスワード */
-	@NotBlank(message="パスワードは６〜１２文字で入力してください")
-	@Size(min = 6, max = 12)
+	@NotBlank(message="パスワードを入力してください")
+	@Size(min = 6, max = 12, message="パスワードは６〜１２文字で入力してください")
 	private String password;
 	public String getName() {
 		return name;
