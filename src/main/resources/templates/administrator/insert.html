@@ -80,8 +80,6 @@
 										<label>
 											パスワード(確認用):
 										</label>
-										<label th:if="${#fields.hasErrors('checkedpassword')}" th:errors="*{checkedpassword}" class="error-messages">
-										</label>
 										<input type="password" name="checkedpassword" id="checkedpassword" th:field="*{checkedpassword}" class="form-control">
 									</div>
 								</div>
