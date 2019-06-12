@@ -54,8 +54,6 @@
 										<label for="mailAddress">
 											メールアドレス:
 										</label>
- 										<span  th:text="${sameemail}" style="color:red"></span>		
-										<!-- <span th:if="${#fields.hasErrors('mailAddress')}" th:text="${sameemail}"></span> -->					
 										<label th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}" class="error-messages">
 											メールアドレスを入力してください
 										</label>
@@ -71,7 +69,7 @@
 										<label for="passwaord">
 											パスワード:
 										</label>
-										<span  th:text="${passwordNotMatch}" style="color:red"></span>
+										<!-- <span  th:text="${passwordNotMatch}" style="color:red"></span> -->
 										<label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-messages">
 											パスワードを入力してください
 										</label>

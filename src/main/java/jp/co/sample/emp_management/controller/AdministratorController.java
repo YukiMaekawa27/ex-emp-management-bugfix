@@ -78,13 +78,12 @@ public class AdministratorController {
 		BeanUtils.copyProperties(form, administrator);
 		Administrator existOrNot = administratorService.findByMailAddress(administrator.getMailAddress());
 		if (existOrNot != null) {
-			result.rejectValue("sameemail", null,  "すでに使われているメールアドレスです。");
-			//model.addAttribute("sameemail", "すでに使われているメールアドレスです。");
+			result.rejectValue("mailAddress", null,  "すでに使われているメールアドレスです。");
 			return toInsert(model);
 		}
 		//確認用パスワードとパスワードが一致するかチェック
 		if (!administrator.getPassword().equals(password2)) {
-			model.addAttribute("passwordNotMatch", "パスワードが一致しません。");
+			result.rejectValue("password", null,  "パスワードが一致しません。");
 			return toInsert(model);
 		}
 		return "redirect:/";
