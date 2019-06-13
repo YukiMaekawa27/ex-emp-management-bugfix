@@ -30,12 +30,12 @@
 
 <!-- ここにモックのform要素を貼り付けます -->
 
-					<form method="post" action="../employee/list.html" th:action="@{/login}">
+					<form method="post" action="../employee/list.html" th:action="@{/login}"  th:object="${loginForm}">
 						<fieldset>
 							<legend>ログイン</legend>
 							<div class="form-group">
-								<div class="alert alert-danger" th:if="${errorMessage}">
-			                        <p th:text="${errorMessage}">メールアドレスまたはパスワードが間違っています</p>
+								<div class="alert alert-danger" th:if="${#fields.hasErrors('mailAddress')}" >
+			                        <p th:errors="*{mailAddress}">メールアドレスまたはパスワードが間違っています</p>
 			                    </div>
 							</div>
 							<div class="form-group">

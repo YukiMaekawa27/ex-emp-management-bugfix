@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -129,13 +128,14 @@ public class AdministratorController {
 		HashPasswordController hashPass = new HashPasswordController();
 		Administrator administrator = administratorService.searchByMailAddress(form.getMailAddress());
 		String hash = administrator.getPassword();
-		hashPass.CheckHashedPassword(form.getPassword(), hash);
+		Boolean isLogin = hashPass.CheckHashedPassword(form.getPassword(), hash);
 		
 		//ログインするための管理者情報があるか確認
-		administrator = administratorService.login(form.getMailAddress(), form.getPassword());
-		if (administrator == null) {
-			result.addError(new ObjectError("loginError", "メールアドレスまたはパスワードが不正です。"));
-			return toLogin();
+		if (!isLogin) {
+			result.rejectValue("mailAddress", null,"メールアドレスまたはパスワードが不正です。");
+		}
+		if(result.hasErrors()) {
+			return toLogin();			
 		}
 		session.setAttribute("administratorName", administrator.getName());
 		return "forward:/employee/showList";
