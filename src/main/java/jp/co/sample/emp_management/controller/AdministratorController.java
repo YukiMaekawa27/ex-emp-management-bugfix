@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -35,8 +36,13 @@ public class AdministratorController {
 	@Autowired
 	private HttpSession session;
 	
-	// BCrypt
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	@Autowired
+	private PasswordEncoder encoder;
+	
+	@Bean
+	public PasswordEncoder encoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
@@ -93,9 +99,10 @@ public class AdministratorController {
 			return toInsert(model);
 		}
 		//パスワードの暗号化
-		HashPasswordController hashPass = new HashPasswordController();
-		administrator.setPassword(hashPass.GetHashedPassword(administrator.getPassword()));
+		String hash = encoder.encode(administrator.getPassword());
+		administrator.setPassword(hash);
 		System.out.println(administrator.getPassword());
+		
 		administratorService.insert(administrator);
 		
 		
@@ -125,10 +132,9 @@ public class AdministratorController {
 	@RequestMapping("/login")
 	public String login(LoginForm form, BindingResult result, Model model) {
 		//パスワードと保存してあったハッシュ値を照合
-		HashPasswordController hashPass = new HashPasswordController();
 		Administrator administrator = administratorService.searchByMailAddress(form.getMailAddress());
 		String hash = administrator.getPassword();
-		Boolean isLogin = hashPass.CheckHashedPassword(form.getPassword(), hash);
+		Boolean isLogin = encoder.matches(form.getPassword(), hash );
 		
 		//ログインするための管理者情報があるか確認
 		if (!isLogin) {
