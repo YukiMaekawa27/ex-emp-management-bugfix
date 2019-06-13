@@ -65,6 +65,7 @@ public class EmployeeController {
 		List<Employee> employeeList = employeeService.searchWithKeyword(keyword);
 		if(employeeList.size() == 0) {
 			model.addAttribute("cantFind", "従業員が見つかりませんでした。キーワードを変えてお探し下さい。");
+			employeeList = employeeService.showList();
 		}
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";

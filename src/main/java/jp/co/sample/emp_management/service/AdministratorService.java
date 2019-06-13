@@ -40,7 +40,20 @@ public class AdministratorService {
 		return administrator;
 	}
 	
-	public Administrator findByMailAddress(String mailAddress) {
-		return administratorRepository.findByMailAddress(mailAddress); 
+	
+	/**
+	 * メールアドレスの有無を調べる.
+	 * メールアドレスがある場合、true
+	 * ない場合はfalseを返す
+	 * 
+	 * @param mailAddress
+	 * @return
+	 */
+	public Boolean isCheckByMailAddress(String mailAddress) {
+		if(administratorRepository.findByMailAddress(mailAddress)!=null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

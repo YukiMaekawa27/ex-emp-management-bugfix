@@ -70,18 +70,17 @@ public class AdministratorController {
 	 */
 	@RequestMapping("/insert")
 	public String insert(@Validated InsertAdministratorForm form, BindingResult result, Model model, String checkedpassword) {
+		//メールアドレスのダブりがないかチェック
+		Boolean hasMailAddress = administratorService.isCheckByMailAddress(form.getMailAddress());
+		if (hasMailAddress) {
+			result.rejectValue("mailAddress", null,  "すでに使われているメールアドレスです。");
+		}
 		if (result.hasErrors()) {
 			return toInsert(model);
 		}
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
-		Administrator existOrNot = administratorService.findByMailAddress(administrator.getMailAddress());
-		//メールアドレスのダブりがないかチェック
-		if (existOrNot != null) {
-			result.rejectValue("mailAddress", null,  "すでに使われているメールアドレスです。");
-			return toInsert(model);
-		}
 		//確認用パスワードとパスワードが一致するかチェック
 		if (!administrator.getPassword().equals(checkedpassword)) {
 			result.rejectValue("password", null,  "パスワードが一致しません。");
