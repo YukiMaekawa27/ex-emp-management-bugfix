@@ -56,4 +56,8 @@ public class AdministratorService {
 			return false;
 		}
 	}
+	
+	public Administrator searchByMailAddress(String mailAddress) {
+		return administratorRepository.findByMailAddress(mailAddress);
+	}
 }
