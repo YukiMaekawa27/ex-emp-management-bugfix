@@ -52,4 +52,8 @@ public class EmployeeService {
 	public void update(Employee employee) {
 		employeeRepository.update(employee);
 	}
+	
+	public List<Employee> searchWithKeyword(String keyword){
+		return employeeRepository.searchWithKeyword(keyword);
+	}
 }

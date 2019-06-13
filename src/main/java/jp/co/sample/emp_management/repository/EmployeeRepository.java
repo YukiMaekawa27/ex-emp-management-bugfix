@@ -83,4 +83,18 @@ public class EmployeeRepository {
 		String updateSql = "UPDATE employees SET dependents_count=:dependentsCount WHERE id=:id";
 		template.update(updateSql, param);
 	}
+
+	/**
+	 * 曖昧検索を行います.
+	 * 
+	 * @param 名前
+	 * @return 従業員リスト
+	 */
+	public List<Employee> searchWithKeyword(String keyword) {
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count "
+				          + "FROM employees WHERE name Like :keyword ORDER BY hire_date;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("keyword", '%' + keyword + '%');
+		List<Employee> employeeList = template.query(sql, param, EMPLOYEE_ROW_MAPPER);
+		return employeeList;
+	}
 }

@@ -52,6 +52,23 @@ public class EmployeeController {
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
 	}
+	
+	/**
+	 * 曖昧検索を行います.
+	 * 
+	 * @param キーワード
+	 * @param リクエストスコープ
+	 * @return 従業員リスト
+	 */
+	@RequestMapping("/searchWithKeyword")
+	public String searchWithKeyword(String keyword, Model model) {
+		List<Employee> employeeList = employeeService.searchWithKeyword(keyword);
+		if(employeeList.size() == 0) {
+			model.addAttribute("cantFind", "従業員が見つかりませんでした。キーワードを変えてお探し下さい。");
+		}
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
+	}
 
 	
 	/////////////////////////////////////////////////////

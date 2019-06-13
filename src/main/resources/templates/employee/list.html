@@ -64,6 +64,13 @@
 
 <!-- ここにモックのtable要素を貼り付けます -->
 
+				<form method="post" th:action="@{/employee/searchWithKeyword}">
+					従業員検索:<br>
+					<input type="text" name="keyword" >
+					<button type="submit" class="btn btn-primary">検索</button>				
+				</form>
+				<span th:text="${cantFind}" style="color:red"></span>
+
 				<table class="table table-striped">
 					<thead>
 						<tr>
