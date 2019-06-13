@@ -89,6 +89,11 @@ public class EmployeeController {
 		return "employee/detail";
 	}
 	
+	@RequestMapping("/addemployee")
+	public String addEmployee() {
+		return "employee/addemployee";
+	}
+	
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員詳細を更新する
 	/////////////////////////////////////////////////////
