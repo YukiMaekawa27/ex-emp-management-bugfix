@@ -123,6 +123,16 @@ public class AdministratorController {
 		session.setAttribute("administratorName", administrator.getName());
 		return "forward:/employee/showList";
 	}
+	
+	/**
+	 * 500エラー時にエラー画面へ遷移する.
+	 * 
+	 * @return エラー画面
+	 */
+	@RequestMapping("/maintenance")
+	public String maintenance() {
+		return "error/maintenance";
+	}
 
 	/////////////////////////////////////////////////////
 	// ユースケース：ログアウトをする
@@ -137,5 +147,4 @@ public class AdministratorController {
 		session.invalidate();
 		return "redirect:/";
 	}
-
 }
