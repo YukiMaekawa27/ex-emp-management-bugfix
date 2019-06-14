@@ -49,8 +49,8 @@ public class EmployeeService {
 	 * 
 	 * @param employee　更新した従業員情報
 	 */
-	public void update(Employee employee) {
-		employeeRepository.update(employee);
+	public void insert(Employee employee) {
+		employeeRepository.insert(employee);
 	}
 	
 	public List<Employee> searchWithKeyword(String keyword){
@@ -59,5 +59,9 @@ public class EmployeeService {
 	
 	public Integer getMaxId() {
 		return employeeRepository.getMaxId();
+	}
+	
+	public void delete(String id) {
+		employeeRepository.delete(id);
 	}
 }

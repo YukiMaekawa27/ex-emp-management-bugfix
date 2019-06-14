@@ -170,6 +170,8 @@
 							<button type="submit" class="btn btn-primary">更新</button>
 							<br><br>
 							<a th:href="@{/employee/showList}" class="btn btn-primary">従業員リストへ戻る</a>
+							<br><br>
+							<a th:href="@{'/employee/delete?id=' + ${employee.id}}" class="btn btn-primary"  >従業員削除</a>
 						</fieldset>
 					</form>
 					

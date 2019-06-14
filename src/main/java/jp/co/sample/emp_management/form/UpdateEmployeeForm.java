@@ -1,12 +1,9 @@
 package jp.co.sample.emp_management.form;
 
-import java.util.Date;
-
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 従業員情報更新時に使用するフォーム.
@@ -21,14 +18,12 @@ public class UpdateEmployeeForm {
 	@NotBlank(message="名前を入力してください")
 	private String name;
 	/** 画像 */
-	@NotEmpty(message="画像を添付してください")
-	private String image;
+	private MultipartFile image;
 	/** 性別 */
 	@NotBlank(message="性別をを選択してください")
 	private String gender;
 	/** 入社日 */
-	@DateTimeFormat
-	private Date hireDate;
+	private String hireDate;
 	/** メールアドレス */
 	@NotBlank(message="メールアドレスを入力してください")
 	private String mailAddress;
@@ -58,7 +53,7 @@ public class UpdateEmployeeForm {
 	 * @return 数値のID
 	 */
 	public Integer getIntId() {
-		return Integer.parseInt(id);
+		return Integer.parseInt(this.id);
 	}
 	
 	/**
@@ -67,7 +62,7 @@ public class UpdateEmployeeForm {
 	 * @return 数値の給料
 	 */
 	public Integer getIntSalary() {
-		return Integer.parseInt(salary);
+		return Integer.parseInt(this.salary);
 	}
 	
 	/**
@@ -76,7 +71,11 @@ public class UpdateEmployeeForm {
 	 * @return 数値の扶養人数
 	 */
 	public Integer getIntDependentsCount() {
-		return Integer.parseInt(dependentsCount);
+		return Integer.parseInt(this.dependentsCount);
+	}
+	
+	public String getStringImage() {
+		return String.valueOf(image);
 	}
 
 	public String getId() {
@@ -95,11 +94,11 @@ public class UpdateEmployeeForm {
 		this.name = name;
 	}
 
-	public String getImage() {
+	public MultipartFile getImage() {
 		return image;
 	}
 
-	public void setImage(String image) {
+	public void setImage(MultipartFile image) {
 		this.image = image;
 	}
 
@@ -111,11 +110,12 @@ public class UpdateEmployeeForm {
 		this.gender = gender;
 	}
 
-	public Date getHireDate() {
+
+	public String getHireDate() {
 		return hireDate;
 	}
 
-	public void setHireDate(Date hireDate) {
+	public void setHireDate(String hireDate) {
 		this.hireDate = hireDate;
 	}
 
@@ -174,8 +174,6 @@ public class UpdateEmployeeForm {
 	public void setDependentsCount(String dependentsCount) {
 		this.dependentsCount = dependentsCount;
 	}
-	
-
 
 	
 }

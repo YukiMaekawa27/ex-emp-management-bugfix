@@ -1,5 +1,12 @@
 package jp.co.sample.emp_management.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -37,6 +44,7 @@ public class EmployeeController {
 	public UpdateEmployeeForm setUpForm() {
 		return new UpdateEmployeeForm();
 	}
+
 
 	/////////////////////////////////////////////////////
 	// ユースケース：従業員一覧を表示する
@@ -90,10 +98,26 @@ public class EmployeeController {
 		return "employee/detail";
 	}
 	
+	@RequestMapping("/delete")
+	public String delete(String id, Model model) {
+		System.out.println(id);
+		employeeService.delete(id);
+		System.out.println(id);
+		return showList(model);
+	}
+	
+	/**
+	 * 従業員追加画面へ遷移する.
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("/addemployee")
 	public String addEmployee(Model model) {
-		model.addAttribute("id", employeeService.getMaxId()+1);
-//		System.out.println(model);
+		Integer newId =	employeeService.getMaxId() + 1;
+		System.out.println(newId);
+		model.addAttribute("id", String.valueOf(newId));
+ 		System.out.println(model);
 		return "employee/addemployee";
 	}
 	
@@ -108,15 +132,37 @@ public class EmployeeController {
 	 * @return 従業員一覧画面へリダクレクト
 	 */
 	@RequestMapping("/update")
-	public String update(@Validated UpdateEmployeeForm form, BindingResult result, Model model) {
-		if(result.hasErrors()) {
-			return addEmployee(model);
+	public String update(
+			@Validated UpdateEmployeeForm form,
+			BindingResult result,
+			Model model) {
+		if(form.getImage().isEmpty()) {
+			result.rejectValue("image", null, "画像を選択してください " );
 		}
+		if(result.hasErrors()) {
+			//return addEmployee(model);
+		}
+		
+		//従業員情報をformからdomainへコピー
 		Employee employee = new Employee();
 		BeanUtils.copyProperties(form, employee);
-		employee.setId(form.getIntId());
+		employee.setId(Integer.parseInt(form.getId()));
 		employee.setSalary(form.getIntSalary());
 		employee.setDependentsCount(form.getIntDependentsCount());
+		employee.setImage(form.getImage().getOriginalFilename());
+		employee.setHireDate(Date.valueOf(form.getHireDate()));
+		
+		//画像ファイルをIMGフォルダに保存する
+		  String filename = employee.getImage();
+		  Path uploadfile = Paths.get("src/main/resources/static/img/" + filename);
+		  try (OutputStream os = Files.newOutputStream(uploadfile, StandardOpenOption.CREATE)) {
+		    byte[] bytes = form.getImage().getBytes();
+		    os.write(bytes);
+		  } catch (IOException ex) {
+		    System.err.println(ex);
+		  }
+		  employeeService.insert(employee);
+		  
 		return "redirect:/employee/showList";
 	}
 }

@@ -75,13 +75,14 @@ public class EmployeeRepository {
 	}
 
 	/**
-	 * 従業員情報を変更します.
+	 * 従業員情報を追加します.
 	 */
-	public void update(Employee employee) {
+	public void insert(Employee employee) {
 		SqlParameterSource param = new BeanPropertySqlParameterSource(employee);
 
-		String updateSql = "UPDATE employees SET dependents_count=:dependentsCount WHERE id=:id";
-		template.update(updateSql, param);
+		String insertSql = "INSERT INTO employees (id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count)"
+				                     + " VALUES (:id, :name, :image, :gender, :hireDate, :mailAddress, :zipCode, :address, :telephone, :salary, :characteristics, :dependentsCount); ";
+		template.update(insertSql, param);
 	}
 
 	/**
@@ -103,6 +104,12 @@ public class EmployeeRepository {
 		SqlParameterSource param = new MapSqlParameterSource();
 		Integer maxId = template.queryForObject(sql, param, Integer.class);
 		return maxId;
+	}
+	
+	public void delete(String id) {
+		String sql = "delete from  employees where id= :id;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", Integer.parseInt(id));
+		template.update(sql, param);
 	}
 	
 }
