@@ -115,9 +115,9 @@ public class EmployeeController {
 	@RequestMapping("/addemployee")
 	public String addEmployee(Model model) {
 		Integer newId =	employeeService.getMaxId() + 1;
-		System.out.println(newId);
+//		System.out.println(newId);
 		model.addAttribute("id", String.valueOf(newId));
- 		System.out.println(model);
+// 		System.out.println(model);
 		return "employee/addemployee";
 	}
 	
@@ -131,7 +131,7 @@ public class EmployeeController {
 	 *            従業員情報用フォーム
 	 * @return 従業員一覧画面へリダクレクト
 	 */
-	@RequestMapping("/update")
+	@RequestMapping("/insert")
 	public String update(
 			@Validated UpdateEmployeeForm form,
 			BindingResult result,
