@@ -119,7 +119,8 @@ public class EmployeeRepository {
 	 * @return 管理者情報 存在しない場合はnullを返します
 	 */
 	public Employee findByMailAddress(String mailAddress) {
-		String sql = "select id,name,mail_address,password from employees where mail_address=:mailAddress";
+		String sql = "select id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count "
+				          + "from employees where mail_address=:mailAddress";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("mailAddress", mailAddress);
 		List<Employee> employeeList = template.query(sql, param, EMPLOYEE_ROW_MAPPER);
 		if (employeeList.size() == 0) {

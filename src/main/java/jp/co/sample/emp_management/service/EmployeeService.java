@@ -64,4 +64,20 @@ public class EmployeeService {
 	public void delete(String id) {
 		employeeRepository.delete(id);
 	}
+	
+	/**
+	 * メールアドレスの有無を調べる.
+	 * メールアドレスがある場合、true
+	 * ない場合はfalseを返す
+	 * 
+	 * @param mailAddress
+	 * @return
+	 */
+	public Boolean isCheckByMailAddress(String mailAddress) {
+		if(employeeRepository.findByMailAddress(mailAddress)!=null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

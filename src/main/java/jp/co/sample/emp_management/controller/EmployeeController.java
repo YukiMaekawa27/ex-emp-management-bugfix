@@ -114,10 +114,7 @@ public class EmployeeController {
 	 */
 	@RequestMapping("/addemployee")
 	public String addEmployee(Model model) {
-		Integer newId =	employeeService.getMaxId() + 1;
-//		System.out.println(newId);
-		model.addAttribute("id", String.valueOf(newId));
-// 		System.out.println(model);
+		model.addAttribute("id", String.valueOf(employeeService.getMaxId()));
 		return "employee/addemployee";
 	}
 	
@@ -136,9 +133,16 @@ public class EmployeeController {
 			@Validated UpdateEmployeeForm form,
 			BindingResult result,
 			Model model) {
+		//メールアドレスのダブりがないかチェック
+		Boolean hasMailAddress  = employeeService.isCheckByMailAddress(form.getMailAddress());
+		if(hasMailAddress) {
+			result.rejectValue("mailAddress", null,  "すでに使われているメールアドレスです。");
+		}
+		//画像が空ならエラー
 		if(form.getImage().isEmpty()) {
 			result.rejectValue("image", null, "画像を選択してください " );
 		}
+		//エラーをチェック
 		if(result.hasErrors()) {
 			return addEmployee(model);
 		}
@@ -146,7 +150,7 @@ public class EmployeeController {
 		//従業員情報をformからdomainへコピー
 		Employee employee = new Employee();
 		BeanUtils.copyProperties(form, employee);
-		employee.setId(Integer.parseInt(form.getId()));
+		employee.setId(Integer.parseInt(form.getId()+1));
 		employee.setSalary(Integer.parseInt(form.getSalary()));
 		employee.setDependentsCount(Integer.parseInt(form.getDependentsCount()));
 		employee.setImage(form.getImage().getOriginalFilename());
