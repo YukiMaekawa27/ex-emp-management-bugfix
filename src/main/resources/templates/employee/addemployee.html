@@ -77,7 +77,7 @@
 							      従業員名
 							    </th>
 							    <td>
-							     <input type="text" name="name" >
+							     <input type="text" name="name" th:field="*{name}" class="form-control">
 							    </td>
 							  </tr>
 							  <tr>
@@ -93,7 +93,7 @@
 							      性別
 							    </th>
 							    <td>
-							      <input type="text" name="gender" >
+							      <input type="text" name="gender" class="form-control">
 							    </td>
 							  </tr>
 							  <tr>
@@ -101,7 +101,7 @@
 							      入社日
 							    </th>
 							    <td>
-							      <input type="date" name="hireDate" >
+							      <input type="date" name="hireDate" class="form-control">
 							    </td>
 							  </tr>
 							  <tr>
@@ -109,7 +109,7 @@
 							      メールアドレス
 							    </th>
 							    <td>
-							     <input type="text" name="mailAddress" >
+							     <input type="text" name="mailAddress" class="form-control">
 							    </td>
 							  </tr>
 							  <tr>
@@ -117,7 +117,7 @@
 							      郵便番号
 							    </th>
 							    <td>
-							      <input type="text" name="zipCode" >
+							      <input type="text" name="zipCode" class="form-control">
 							    </td>
 							  </tr>
 							  <tr>
@@ -125,7 +125,7 @@
 							      住所
 							    </th>
 							    <td>
-							      <input type="text" name="address" >
+							      <input type="text" name="address" class="form-control">
 							    </td>
 							  </tr>
 							  <tr>
@@ -133,7 +133,7 @@
 							      電話番号
 							    </th>
 							    <td>
-							      <input type="text" name="telephone" >
+							      <input type="text" name="telephone" class="form-control">
 							    </td>
 							  </tr>
 							  <tr>
@@ -141,7 +141,7 @@
 							      給料
 							    </th>
 							    <td>
-							      <input type="text" name="salary" >
+							      <input type="text" name="salary" class="form-control">
 							    </td>
 							  </tr>
 							  <tr>
@@ -149,7 +149,7 @@
 							      特性
 							    </th>
 							    <td>
-									<input type="text" name="characteristics" >
+									<input type="text" name="characteristics" class="form-control">
 							    </td>
 							  </tr>
 							  <tr>
@@ -161,8 +161,8 @@
 											扶養人数を入力してください
 									</label>
 									<label class="control-label" style="color: red" for="dependentsCount"></label>
-									<input type="hidden" name="id" >
-									<input type="text" name="dependentsCount" id="dependentsCount" class="form-control" value="3">
+									<input type="hidden" name="id"  th:val="${id}">
+									<input type="text" name="dependentsCount" id="dependentsCount" class="form-control">
 							    </td>
 							  </tr>
 							</table>

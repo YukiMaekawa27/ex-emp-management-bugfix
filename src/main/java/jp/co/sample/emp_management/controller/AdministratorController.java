@@ -130,7 +130,10 @@ public class AdministratorController {
 	 * @return ログイン後の従業員一覧画面
 	 */
 	@RequestMapping("/login")
-	public String login(LoginForm form, BindingResult result, Model model) {
+	public String login(@Validated LoginForm form, BindingResult result, Model model) {
+		if(result.hasErrors()) {
+			return toLogin();			
+		}
 		//パスワードと保存してあったハッシュ値を照合
 		Administrator administrator = administratorService.searchByMailAddress(form.getMailAddress());
 		String hash = administrator.getPassword();
@@ -139,9 +142,7 @@ public class AdministratorController {
 		//ログインするための管理者情報があるか確認
 		if (!isLogin) {
 			result.rejectValue("mailAddress", null,"メールアドレスまたはパスワードが不正です。");
-		}
-		if(result.hasErrors()) {
-			return toLogin();			
+			return toLogin();
 		}
 		session.setAttribute("administratorName", administrator.getName());
 		return "forward:/employee/showList";

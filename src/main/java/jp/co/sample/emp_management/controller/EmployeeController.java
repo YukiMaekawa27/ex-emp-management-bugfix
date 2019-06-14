@@ -90,7 +90,9 @@ public class EmployeeController {
 	}
 	
 	@RequestMapping("/addemployee")
-	public String addEmployee() {
+	public String addEmployee(Model model) {
+		model.addAttribute("id", employeeService.getMaxId()+1);
+		System.out.println(model);
 		return "employee/addemployee";
 	}
 	
@@ -107,7 +109,7 @@ public class EmployeeController {
 	@RequestMapping("/update")
 	public String update(@Validated UpdateEmployeeForm form, BindingResult result, Model model) {
 		if(result.hasErrors()) {
-			return showDetail(form.getId(), model);
+			return addEmployee(model);
 		}
 		Employee employee = new Employee();
 		employee.setId(form.getIntId());

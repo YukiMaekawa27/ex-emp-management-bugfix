@@ -56,4 +56,8 @@ public class EmployeeService {
 	public List<Employee> searchWithKeyword(String keyword){
 		return employeeRepository.searchWithKeyword(keyword);
 	}
+	
+	public Integer getMaxId() {
+		return employeeRepository.getMaxId();
+	}
 }

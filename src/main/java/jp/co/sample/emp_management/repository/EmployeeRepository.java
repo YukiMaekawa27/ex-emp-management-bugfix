@@ -97,4 +97,12 @@ public class EmployeeRepository {
 		List<Employee> employeeList = template.query(sql, param, EMPLOYEE_ROW_MAPPER);
 		return employeeList;
 	}
+	
+	public Integer getMaxId() {
+		String sql ="select max(id) from administrators;";
+		SqlParameterSource param = new MapSqlParameterSource();
+		Integer maxId = template.queryForObject(sql, param, Integer.class);
+		return maxId;
+	}
+	
 }
