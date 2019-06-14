@@ -140,15 +140,15 @@ public class EmployeeController {
 			result.rejectValue("image", null, "画像を選択してください " );
 		}
 		if(result.hasErrors()) {
-			//return addEmployee(model);
+			return addEmployee(model);
 		}
 		
 		//従業員情報をformからdomainへコピー
 		Employee employee = new Employee();
 		BeanUtils.copyProperties(form, employee);
 		employee.setId(Integer.parseInt(form.getId()));
-		employee.setSalary(form.getIntSalary());
-		employee.setDependentsCount(form.getIntDependentsCount());
+		employee.setSalary(Integer.parseInt(form.getSalary()));
+		employee.setDependentsCount(Integer.parseInt(form.getDependentsCount()));
 		employee.setImage(form.getImage().getOriginalFilename());
 		employee.setHireDate(Date.valueOf(form.getHireDate()));
 		
