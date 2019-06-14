@@ -100,7 +100,7 @@ public class EmployeeRepository {
 	}
 	
 	public Integer getMaxId() {
-		String sql ="select max(id) from administrators;";
+		String sql ="select max(id) from employees;";
 		SqlParameterSource param = new MapSqlParameterSource();
 		Integer maxId = template.queryForObject(sql, param, Integer.class);
 		return maxId;

@@ -160,15 +160,14 @@
 							    	<label th:if="${#fields.hasErrors('dependentsCount')}" th:errors="*{dependentsCount}" class="error-messages">
 											扶養人数を入力してください
 									</label>
-									<label class="control-label" style="color: red" for="dependentsCount"></label>
-									<input type="hidden" name="id" th:value="${employee.id}">
-									<input type="text" name="dependentsCount" id="dependentsCount" class="form-control" value="3"
-										 th:errorclass="error-input" th:value="${employee.dependentsCount}">
+									<!-- <label class="control-label" style="color: red" for="dependentsCount"></label>
+									<input type="hidden" name="id" th:value="${employee.id}"> -->
+									<!-- <input type="text" name="dependentsCount" id="dependentsCount" class="form-control" value="3"
+										 th:errorclass="error-input" th:value="${employee.dependentsCount}"> -->
+										 <span th:text="${employee.dependentsCount}"></span>人
 							    </td>
 							  </tr>
 							</table>
-							<button type="submit" class="btn btn-primary">更新</button>
-							<br><br>
 							<a th:href="@{/employee/showList}" class="btn btn-primary">従業員リストへ戻る</a>
 							<br><br>
 							<a th:href="@{'/employee/delete?id=' + ${employee.id}}" class="btn btn-primary"  >従業員削除</a>
