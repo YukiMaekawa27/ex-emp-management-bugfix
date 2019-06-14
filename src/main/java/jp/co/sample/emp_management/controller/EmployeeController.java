@@ -2,6 +2,7 @@ package jp.co.sample.emp_management.controller;
 
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,7 +93,7 @@ public class EmployeeController {
 	@RequestMapping("/addemployee")
 	public String addEmployee(Model model) {
 		model.addAttribute("id", employeeService.getMaxId()+1);
-		System.out.println(model);
+//		System.out.println(model);
 		return "employee/addemployee";
 	}
 	
@@ -112,9 +113,10 @@ public class EmployeeController {
 			return addEmployee(model);
 		}
 		Employee employee = new Employee();
+		BeanUtils.copyProperties(form, employee);
 		employee.setId(form.getIntId());
+		employee.setSalary(form.getIntSalary());
 		employee.setDependentsCount(form.getIntDependentsCount());
-		employeeService.update(employee);
 		return "redirect:/employee/showList";
 	}
 }
