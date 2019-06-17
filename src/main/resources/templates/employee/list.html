@@ -75,7 +75,11 @@
 
 				<form method="post" th:action="@{/employee/searchWithKeyword}">
 					従業員検索:<br>
-					<input id="autocomplete" type="text" name="keyword" >
+					
+					<input id="autocomplete" type="text" name="keyword" autocomplete="on" list="employee">
+					<datalist  id="employee">
+					<option th:each="employee : ${employeeList}" th:value="${employee.name}"></option>
+					</datalist>
 					<button type="submit" class="btn btn-primary">検索</button>				
 				</form>
 				<span th:text="${cantFind}" style="color:red"></span>
