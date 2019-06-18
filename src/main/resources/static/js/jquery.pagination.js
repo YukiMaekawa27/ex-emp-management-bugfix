@@ -112,7 +112,7 @@
 				ellipsisClassName              : 'ellipsis',
 				pageInfoClassName              : 'page-info',
 				setPagination                  : '',
-				setPaginationMode              : 'before',
+				setPaginationMode              : 'after',
 				changeStartCallback            : function() {},
 				changeEndCallback              : function() {},
 				idPrefix                       : 'pg'
